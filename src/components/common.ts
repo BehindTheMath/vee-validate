@@ -33,6 +33,7 @@ function shouldValidate(ctx: ProviderInstance, value: string) {
 
 export interface ValidationContext extends Pick<ValidationFlags, KnownKeys<ValidationFlags>> {
   errors: string[];
+  firstError: string;
   classes: Record<string, boolean>;
   valid: boolean;
   failedRules: Record<string, string>;
@@ -53,6 +54,7 @@ export function createValidationCtx(ctx: ProviderInstance): ValidationContext {
   return {
     ...ctx.flags,
     errors: ctx.errors,
+    firstError: (ctx.errors && ctx.errors[0]) || '',
     classes: ctx.classes,
     failedRules: ctx.failedRules,
     reset: () => ctx.reset(),

@@ -981,6 +981,46 @@ test('sets errors manually with setErrors', async () => {
   expect(wrapper.find('#error').text()).toBe('WRONG!');
 });
 
+test('Sets firstError to the first error when there are errors', async () => {
+  const wrapper = mount(
+    {
+      data: () => ({ val: null }),
+      template: `
+        <ValidationProvider ref="provider" v-slot="{ firstError }" rules="required">
+          <input type="text" v-model="val">
+          <p id="error">{{ firstError }}</p>
+        </ValidationProvider>
+      `
+    },
+    { localVue: Vue, sync: false }
+  );
+
+  await flushPromises();
+
+  wrapper.vm.$refs.provider.setErrors(['Error 1', 'Error 2']);
+  await flushPromises();
+  expect(wrapper.find('#error').text()).toBe('Error 1');
+});
+
+test('Sets firstError to an empty string when there are no errors', async () => {
+  const wrapper = mount(
+    {
+      data: () => ({ val: null }),
+      template: `
+        <ValidationProvider ref="provider" v-slot="{ firstError }" rules="required">
+          <input type="text" v-model="val">
+          <p id="error">{{ firstError }}</p>
+        </ValidationProvider>
+      `
+    },
+    { localVue: Vue, sync: false }
+  );
+
+  await flushPromises();
+
+  expect(wrapper.find('#error').text()).toBe('');
+});
+
 describe('HTML5 Rule inference', () => {
   test('Required and email rules', async () => {
     const wrapper = mount(

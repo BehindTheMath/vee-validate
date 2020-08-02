@@ -9,6 +9,7 @@ These are the properties available on the slot scope accessible with `v-slot`:
 | Name        |            Type            | Description                                                                                                   |
 | :---------- | :------------------------: | :------------------------------------------------------------------------------------------------------------ |
 | errors      |         `string[]`         | The list of error messages.                                                                                   |
+| firstError  |          `string`          | The first error from `errors`, or an empty string. (Shortcut for `errors ? errors[0] : ''`                    |
 | failedRules |   `[x: string]: string`    | A map object of failed rules with (rule, message) as a (key, value)                                           |
 | aria        | `{ [x: string]: string }`  | Map object of aria attributes for accessibility.                                                              |
 | classes     | `{ [x: string]: boolean }` | Map object of the classes configured based on the validation state.                                           |
